@@ -69,6 +69,7 @@ class MBF(nn.Module):
                  inner_scale=1):
         super().__init__()
         self.fp16 = fp16
+        self.stem_ = ConvBlock(in_channels=3, out_channels=3, kernel_size=3, stride=2, padding=1)
         self.stem = ConvBlock(in_channels=3, out_channels=128, kernel_size=3, stride=2, padding=1)
         self.stages_channel = stages_channel
         self.stages = stages
@@ -110,6 +111,8 @@ class MBF(nn.Module):
 
     def forward(self, x):
         # with torch.cuda.amp.autocast(self.fp16):
+        # raw mbf allow a input at 112x112, so downsample at first from 224x224 to 112x112
+        x = self.stem_(x)
         x = self.stem(x)
         for i in range(len(self.stages)):
             x = self.stage_blocks[i](x)

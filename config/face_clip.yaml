@@ -1,0 +1,30 @@
+experiment_name: "face_clip"
+dataset:
+  dataset_root: "/home/jiangda/tx/data/CelebAMask-HQ_224x224"
+  anno_file: "/home/jiangda/tx/data/CelebAMask-HQ_224x224/faces_processed.tx"
+  batch_size: 32
+  num_workers: 8
+  pre_processed: True
+# vision model
+vision_model:
+  model_name: "MobileFaceNet"
+  stages_channels: [ 128, 128, 256, 256 ]
+  stages: [ 3, 3, 9, 3 ]
+  inner_scale: 1
+# text model
+text_model:
+  model_name: "Transformer"
+  heads: 8
+  layers: 6
+model_name: "CLIP"
+clip:
+  embedding_size: 512
+  context_length: 114
+  vocab_size: 2489
+train:
+  vision_model_pth: "./data/model.pth"
+  warmup_epochs: 5
+  max_lr: 0.001
+  min_lr: 1e-6
+  epochs: 30
+  save_interval: 1

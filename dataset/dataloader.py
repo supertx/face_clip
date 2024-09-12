@@ -1,7 +1,9 @@
-"""
-@author supermantx
-@date 2024/9/6 11:03
-"""
+'''
+Author: supermantx
+Date: 2024-09-06 11:04:32
+LastEditTime: 2024-09-12 15:49:23
+Description: 
+'''
 import torch
 from torchvision import transforms
 from torch.utils.data import DataLoader
@@ -32,16 +34,8 @@ def collate_fn(batch):
     return torch.stack(imgs, dim=0), torch.stack(ret_texts, dim=0)
 
 
-def get_data_loader(cfg=None):
-    # CelebA(cfg.dataset_root, cfg.anno_file, transform=get_transform(is_train=True))
-    celebA = CelebA("/home/jiangda/tx/data/CelebAMask-HQ_224x224",
-                    "/home/jiangda/tx/data/CelebAMask-HQ_224x224/faces_processed.tx", is_preprocessed=True,
-                    transform=get_transform(is_train=True))
-    # dataloader(batch_size=cfg.batch_size, shuffle=True, num_workers=cfg.num_workers, collate_fn=collate_fn)
-    return DataLoader(celebA, batch_size=32, shuffle=True, num_workers=8, collate_fn=collate_fn)
+def get_data_loader(cfg, is_train=True):
+    celebA = CelebA(cfg.dataset_root, cfg.anno_file, transform=get_transform(is_train=is_train), is_preprocessed=cfg.pre_processed)
+    return DataLoader(celebA, batch_size=cfg.batch_size, shuffle=True, num_workers=cfg.num_workers, collate_fn=collate_fn)
 
 
-if __name__ == '__main__':
-    loader = get_data_loader()
-    imgs, texts = next(iter(loader))
-    print(imgs.shape, texts.shape)

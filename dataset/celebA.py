@@ -71,7 +71,7 @@ class CelebA(Dataset):
                     self.__write_cache(processed_anno_file, descriptions_temp)
                     descriptions_temp = []
                 processed_anno_file.write(line.split(" ")[0] + " ")
-                temp = line.split(" ")[1:]
+                temp = eval(line.split(" ")[1])
             else:
                 temp = line.split(" ")
             temp = list(map(lambda x: x.rstrip(".,!?\n").lower(), temp))
@@ -106,7 +106,6 @@ class CelebA(Dataset):
 
     def __len__(self):
         return len(self.img_idx)
-
 
 
 if __name__ == '__main__':

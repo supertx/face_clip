@@ -86,6 +86,9 @@ class Dictionary:
 
     def has_word(self, word):
         return self.vocabulary.has_word(word)
+    
+    def __len__(self):
+        return len(self.dictionary)
 
 
 if __name__ == "__main__":
