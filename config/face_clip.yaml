@@ -20,7 +20,7 @@ model_name: "CLIP"
 clip:
   embedding_size: 512
   context_length: 114
-  vocab_size: 2489
+  vocab_size: 2490
 train:
   vision_model_pth: "./data/model.pth"
   warmup_epochs: 5

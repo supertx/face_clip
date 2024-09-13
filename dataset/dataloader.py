@@ -1,7 +1,7 @@
 '''
 Author: supermantx
 Date: 2024-09-06 11:04:32
-LastEditTime: 2024-09-12 15:49:23
+LastEditTime: 2024-09-13 10:16:44
 Description: 
 '''
 import torch
@@ -30,7 +30,7 @@ def collate_fn(batch):
     max_text_len = max([len(text) for text in texts])
     ret_texts = []
     for text in texts:
-        ret_texts.append(torch.cat([text, torch.full((max_text_len - len(text),), -1)], dim=0))
+        ret_texts.append(torch.cat([text, torch.full((max_text_len - len(text),), 0)], dim=0))
     return torch.stack(imgs, dim=0), torch.stack(ret_texts, dim=0)
 
 

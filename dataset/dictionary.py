@@ -77,6 +77,7 @@ class Dictionary:
     def __init__(self, file_path, del_propositions=True):
         self.vocabulary = Vocabulary(file_path, del_propositions)
         sorted_vocabulary = self.vocabulary.get_sorted_vocabulary()
+        self.dictionary["<unk>"] = 0
         self.dictionary = {word: idx for idx, word in enumerate(sorted_vocabulary.keys())}
         self.dictionary["<begin>"] = len(self.dictionary)
         self.dictionary["<end>"] = len(self.dictionary)

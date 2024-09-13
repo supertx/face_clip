@@ -1,7 +1,7 @@
 '''
 Author: supermantx
 Date: 2024-09-06 16:45:39
-LastEditTime: 2024-09-12 16:41:25
+LastEditTime: 2024-09-13 10:20:06
 Description: 
 '''
 """
@@ -33,7 +33,7 @@ def train_one_epoch(model, criterion, loader, optimizer, tb_logger, epoch, confi
         optimizer.step()
 
         log_scalars = {"lr": lr, "loss": loss.item()}
-        tb_logger.log_scalar(log_scalars, epoch * len(loader) + idx)
+        tb_logger.log_everything(log_scalars, epoch * len(loader) + idx)
         t.desc = f"Epoch {epoch} loss: {loss.item():.4f} lr: {lr:.4f}"
 
 def train(args, config):

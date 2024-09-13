@@ -1,3 +1,9 @@
+'''
+Author: supermantx
+Date: 2024-09-06 16:08:47
+LastEditTime: 2024-09-13 09:37:16
+Description: 
+'''
 import torch
 from torch import nn
 import numpy as np
@@ -65,14 +71,13 @@ class CLIP(nn.Module):
         return self.visual_model(image)
 
     def encode_text(self, text):
-        x = self.token_embedding(text).type(
-            self.dtype)  # [batch_size, n_ctx, d_model]
+        x = self.token_embedding(text) # [batch_size, n_ctx, d_model]
 
-        x = x + self.positional_embedding.type(self.dtype)[:text.shape[1]]
+        x = x + self.positional_embedding[:text.shape[1]]
         x = x.permute(1, 0, 2)  # NLD -> LND
         x = self.text_model(x)
         x = x.permute(1, 0, 2)  # LND -> NLD
-        x = self.ln_final(x).type(self.dtype)
+        x = self.ln_final(x)
 
         # x.shape = [batch_size, n_ctx, transformer.width]
         # take features from the eot embedding (eot_token is the highest number in each sequence)

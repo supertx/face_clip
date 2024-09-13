@@ -1,3 +1,9 @@
+'''
+Author: supermantx
+Date: 2024-09-06 13:18:04
+LastEditTime: 2024-09-13 10:19:05
+Description: 
+'''
 """
 @author supermantx
 @date 2024/9/6 13:17
@@ -34,7 +40,7 @@ class ResidualAttentionBlock(nn.Module):
         self.attn_mask = self.attn_mask.to(
             dtype=x.dtype,
             device=x.device) if self.attn_mask is not None else None
-        return self.attn(x, x, x, attn_mask=self.attn_mask)
+        return self.attn(x, x, x, attn_mask=self.attn_mask)[0]
 
     def forward(self, x):
         x = x + self.attention(self.ln_1(x))
